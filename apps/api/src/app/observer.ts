@@ -3,24 +3,24 @@ interface IObserver {
 }
 
 interface ISubject {
-  attach(observer: IObserver): void;
-  detach(observer: IObserver): void;
+  subscribe(observer: IObserver): void;
+  unsubscribe(observer: IObserver): void;
   notify(): void;
 }
 
-class ConcreteSubjectImpl implements ISubject {
+class SubjectImpl implements ISubject {
   public state?: number;
 
   private _observers: IObserver[] = [];
 
-  public attach(observer: IObserver): void {
+  public subscribe(observer: IObserver): void {
     if (this._observers.includes(observer)) {
       return;
     }
     this._observers.push(observer);
   }
 
-  public detach(observer: IObserver): void {
+  public unsubscribe(observer: IObserver): void {
     const id = this._observers.indexOf(observer);
     if (id === -1) {
       return;
@@ -33,19 +33,22 @@ class ConcreteSubjectImpl implements ISubject {
   }
 }
 
-class ConcretObserverImpl implements IObserver {
+class ObserverImpl implements IObserver {
   public update(subject: ISubject): void {
-    if (subject instanceof ConcreteSubjectImpl) {
+    if (subject instanceof SubjectImpl) {
       console.log('event');
     }
   }
 }
 
-const subject: ConcreteSubjectImpl = new ConcreteSubjectImpl();
-const observer: ConcretObserverImpl = new ConcretObserverImpl();
-subject.attach(observer);
-
+const subject: SubjectImpl = new SubjectImpl();
+const observer: ObserverImpl = new ObserverImpl();
+subject.subscribe(observer);
 
 setInterval(() => {
   subject.notify();
 }, 1000);
+
+setTimeout(() => {
+  subject.unsubscribe(observer);
+}, 5000);

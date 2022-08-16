@@ -83,6 +83,8 @@ class WordsCollectionImpl implements IAgregator {
   }
 }
 
+///////////////
+
 const collection: WordsCollectionImpl = new WordsCollectionImpl();
 collection.addItem('item 1');
 collection.addItem('item 2');

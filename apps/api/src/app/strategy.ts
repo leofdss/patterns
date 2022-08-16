@@ -19,13 +19,13 @@ class Context {
 
 //////
 
-class ConcretStrategyAImpl implements IStrategy {
+class StrategyAImpl implements IStrategy {
   public method(data: string[]): string[] {
     return data.sort();
   }
 }
 
-class ConcretStrategyBImpl implements IStrategy {
+class StrategyBImpl implements IStrategy {
   public method(data: string[]): string[] {
     return data.reverse();
   }
@@ -33,8 +33,8 @@ class ConcretStrategyBImpl implements IStrategy {
 
 //////
 
-const context: Context = new Context(new ConcretStrategyAImpl());
+const context: Context = new Context(new StrategyAImpl());
 console.log(context.logic());
 
-context.setStrategy(new ConcretStrategyBImpl());
+context.setStrategy(new StrategyBImpl());
 console.log(context.logic());
